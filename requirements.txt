@@ -1,0 +1,12 @@
+torch
+torch-geometric
+transformers
+datasets
+scikit-learn
+nltk
+numpy
+pandas
+matplotlib
+fastapi
+uvicorn
+joblib

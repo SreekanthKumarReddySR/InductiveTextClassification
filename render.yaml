@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: dbpedia-entity-classification
+    env: docker
+    branch: main
+    region: oregon
+    dockerfilePath: Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "8000"
