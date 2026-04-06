@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: dbpedia-entity-classification
+    name: inductive-text-classification
     env: docker
     branch: main
     region: oregon
