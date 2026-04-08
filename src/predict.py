@@ -9,6 +9,7 @@ from torch_geometric.data import Data
 from torch_geometric.nn import SAGEConv
 from collections import defaultdict
 from sklearn.neighbors import NearestNeighbors
+from src.predict import predict_single
 
 # ---------- User settings ----------
 DATA_DIR = "sampled_data"
