@@ -108,6 +108,12 @@
     const outputBox = document.getElementById('output');
     const statusText = document.getElementById('status');
 
+    const DBPEDIA_14_NAMES = [
+      "Company", "EducationalInstitution", "Artist", "Athlete", "OfficeHolder",
+      "MeanOfTransportation", "Building", "NaturalPlace", "Village", "Animal",
+      "Plant", "Album", "Film", "WrittenWork"
+    ];
+
     async function classifyText() {
       const text = textInput.value.trim();
       if (!text) {
@@ -132,11 +138,20 @@
 
         statusText.textContent = 'Prediction received successfully.';
         outputBox.style.display = 'block';
+
+        // Format probabilities with class names
+        let probText = '';
+        if (data.probabilities) {
+          data.probabilities.forEach((prob, idx) => {
+            const name = DBPEDIA_14_NAMES[idx] || `Class ${idx}`;
+            probText += `${name}: ${(prob * 100).toFixed(2)}%<br>`;
+          });
+        }
+
         outputBox.innerHTML = `
-          <strong>Class ID:</strong> ${data.class_id}<br>
-          <strong>Class Name:</strong> ${data.class_name}<br>
-          <strong>Probabilities:</strong>
-          <pre>${JSON.stringify(data.probabilities, null, 2)}</pre>
+          <strong>Predicted Class:</strong> ${data.class_name} (ID: ${data.class_id})<br><br>
+          <strong>Class Probabilities:</strong><br>
+          ${probText}
         `;
       } catch (error) {
         statusText.textContent = 'Error: ' + error.message;
