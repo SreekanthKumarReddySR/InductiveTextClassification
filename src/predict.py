@@ -181,7 +181,7 @@ def predict_single(text):
 
     # load vectorizer and plain graph data
     vec = joblib.load(VECTORIZER_PATH)
-    plain = torch.load(PLAIN_PATH, map_location="cpu")
+    plain = torch.load(PLAIN_PATH, map_location="cpu", weights_only=False)
     if "x" not in plain or "edge_index" not in plain:
         raise ValueError("graph_data_plain.pt must be a dict with keys 'x' and 'edge_index'")
 
@@ -193,7 +193,7 @@ def predict_single(text):
 
     # construct model and load state
     model = GraphSAGE(in_channels, HIDDEN, num_classes, num_layers=NUM_LAYERS, dropout=DROPOUT)
-    state = torch.load(MODEL_PATH, map_location="cpu")
+    state = torch.load(MODEL_PATH, map_location="cpu", weights_only=False)
     # if state is a dict with keys 'model_state_dict' etc, try to find the right key
     if isinstance(state, dict) and ('state_dict' in state and isinstance(state['state_dict'], dict)):
         sd = state['state_dict']

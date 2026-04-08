@@ -241,6 +241,43 @@ Install PyTorch Geometric following the [official guide](https://pytorch-geometr
 
 ---
 
+## Deployment
+
+### Required deployment artifacts
+The deployable model artifacts are stored under `sampled_data/` and must include:
+- `graph_data_plain.pt`
+- `graphsage_model.pth`
+- `tfidf_vectorizer.joblib`
+- `label_encoder_mapping.joblib`
+- `model_metadata.pkl`
+- `pipeline_metadata.pkl`
+
+### Install dependencies
+1. Create and activate your virtual environment.
+2. Install Python dependencies:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+3. Install the PyTorch Geometric backend for your environment:
+   ```powershell
+   pip install pyg-lib -f https://data.pyg.org/whl/torch-2.11.0+cpu.html
+   pip install torch-sparse -f https://data.pyg.org/whl/torch-2.11.0+cpu.html
+   ```
+4. If you are using CUDA, replace `+cpu` with the correct CUDA tag for your PyTorch version.
+
+### Prepare deployment bundle
+Run the helper script to copy all model artifacts and application code into `deploy_bundle/`:
+```powershell
+python deploy_package.py
+```
+
+### Run the API
+```powershell
+python -m uvicorn app.main:app --reload
+```
+
+---
+
 ## Deployment with MLOps
 
 This project includes MLOps setup for deploying the inductive GraphSAGE model.

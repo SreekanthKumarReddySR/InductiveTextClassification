@@ -1,3 +1,4 @@
+import importlib.util
 import os
 import pickle
 import sys
@@ -5,6 +6,13 @@ import torch
 import torch.nn.functional as F
 from torch_geometric.data import Data
 from torch_geometric.loader import NeighborLoader
+
+if importlib.util.find_spec('torch_sparse') is None and importlib.util.find_spec('pyg_lib') is None:
+    raise ImportError(
+        "NeighborLoader requires either 'torch-sparse' or 'pyg-lib'. "
+        "Install the appropriate backend for your PyTorch version. "
+        "Example: pip install pyg-lib -f https://data.pyg.org/whl/torch-2.11.0+cpu.html"
+    )
 
 try:
     from src.model import GraphSAGE
@@ -29,7 +37,7 @@ if not os.path.exists(PLAIN_PATH):
     raise FileNotFoundError(f"{PLAIN_PATH} not found. Run preprocessing first.")
 
 # Load the plain dict
-d = torch.load(PLAIN_PATH)
+d = torch.load(PLAIN_PATH, weights_only=False)
 x = d["x"]
 edge_index = d["edge_index"]
 y = d["y"]

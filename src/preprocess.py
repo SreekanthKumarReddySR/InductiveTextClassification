@@ -238,20 +238,21 @@ joblib.dump(vectorizer, VECTORIZER_PATH)
 print("Saved TF-IDF vectorizer to:", VECTORIZER_PATH)
 
 X_train_arr = X_train.toarray().astype(np.float32)
-tfidf_train_df = pd.DataFrame(X_train_arr, columns=vectorizer.get_feature_names_out())
-tfidf_train_df['label'] = train_sampled['label_encoded'].values
-tfidf_train_df.to_csv(TFIDF_TRAIN_CSV, index=False)
-print("Saved train TF-IDF CSV to:", TFIDF_TRAIN_CSV)
+# tfidf_train_df = pd.DataFrame(X_train_arr, columns=vectorizer.get_feature_names_out())
+# tfidf_train_df['label'] = train_sampled['label_encoded'].values
+# tfidf_train_df.to_csv(TFIDF_TRAIN_CSV, index=False)
+# print("Saved train TF-IDF CSV to:", TFIDF_TRAIN_CSV)
 
 if test_sampled is not None:
     X_test = vectorizer.transform(test_sampled['text'].values)
     X_test_arr = X_test.toarray().astype(np.float32)
-    tfidf_test_df = pd.DataFrame(X_test_arr, columns=vectorizer.get_feature_names_out())
+    # tfidf_test_df = pd.DataFrame(X_test_arr, columns=vectorizer.get_feature_names_out())
     if 'label_raw' in test_sampled.columns:
-        tfidf_test_df['label_raw'] = test_sampled['label_raw'].values
-    tfidf_test_df['label_encoded'] = test_sampled['label_encoded'].values
-    tfidf_test_df.to_csv(TFIDF_TEST_CSV, index=False)
-    print("Saved test TF-IDF CSV to:", TFIDF_TEST_CSV)
+        pass
+        # tfidf_test_df['label_raw'] = test_sampled['label_raw'].values
+    # tfidf_test_df['label_encoded'] = test_sampled['label_encoded'].values
+    # tfidf_test_df.to_csv(TFIDF_TEST_CSV, index=False)
+    # print("Saved test TF-IDF CSV to:", TFIDF_TEST_CSV)
 
 # ---------- Diagnostics ----------
 n_classes = len(label2int)
